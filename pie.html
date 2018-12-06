@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Distributed System</title>
+    <!--<link type="text/css" rel="stylesheet" href="css/bootstrap.css">-->
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.5.1/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/mycss.css">
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default navbar-inverse" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1"><span
+                            class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                            class="icon-bar"></span><span class="icon-bar"></span></button>
+                    <a class="navbar-brand" href="#">Distributed System</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="index.html"><span class="glyphicon glyphicon-th" style="color: rgb(224, 224, 223); font-size: 15px;"></span> File</a>
+                        </li>
+                        <li class="active">
+                            <a href="pie.html">Analysis</a>
+                        </li>
+                        <li>
+                            <a href="user.html">User Data</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="panel panel-primary" style="padding:10px">
+        <div class="panel">
+            <!--<div class="panel-heading">-->
+                <!--<span class="panel-title">Pie Chart</span>-->
+            <!--</div>-->
+            <div class="panel-body">
+                <!--<div id="container3" style="width: 80%; height: 500px; margin: 0 auto"></div>-->
+
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <ul class="nav nav-tabs" style="padding-left:10px">
+                            <li class="active">
+                                <a href="#local" data-toggle="tab">市话</a>
+                            </li>
+                            <li>
+                                <a href="#long_distance" data-toggle="tab">长途</a>
+                            </li>
+                            <li>
+                                <a href="#roaming" data-toggle="tab">漫游</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="local">
+                        <div class="row clearfix ">
+                            <div class="col-md-12 column" style="border-right: 1px solid #eee;">
+                                <div id="local_pie" style="width: 500px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="long_distance">
+                        <div class="row clearfix ">
+                            <div class="col-md-12 column" style="border-right: 1px solid #eee;">
+                                <div id="long_pie" style="width: 500px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="roaming">
+                        <div class="row clearfix">
+                            <div class="col-md-12 column" style="border-right: 1px solid #eee;">
+                                <div id="roaming_pie" style="width: 500px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.5.1/js/fileinput.min.js"></script>
+<script src="js/highcharts.src.js"></script>
+<script src="js/waterbubble.js"></script>
+<script src="js/pie.js"></script>
+
+</body>
+</html>

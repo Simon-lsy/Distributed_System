@@ -1,0 +1,46 @@
+
+.mypanel-title {
+    font-family: monospace;
+    margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 15px;
+    float: right;
+  color: #777;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 20px;
+    color: #E77600;
+}
+
+.myTop50 {
+    font-weight: 800;
+    color: #FFAC2D;
+}
+
+.panel-chart {
+    margin-top: 0;
+  margin-bottom: 0;
+  font-size: 15px;
+  color: #E7764F;
+    
+}
+
+.line {
+    margin-bottom: 20px;
+    border-top: 1px solid #ebebeb;
+    padding: 2px 0 0;
+}
+
+.navbar-static-bottom {
+    margin-bottom: 0;
+    margin-top: 40px;
+    
+}
+
+.panel-primary {
+    border-color: #FC9B18;
+
+}
