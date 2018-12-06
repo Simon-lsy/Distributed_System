@@ -41,7 +41,6 @@ $(document).ready(function (){
                             '<td style="width: 30%;cursor: pointer">' +
                             '<span class="fa fa-cloud-download">下载</span></td></tr>')
                     }
-
                 },
                 error:function () {
 
@@ -127,15 +126,18 @@ $(document).ready(function (){
     $('.fa-cloud-download').on('click',function () {
         let fileID = $(this).parent().parent().attr('id');
         console.log(fileID);
-
+        let fileName = $(this).parent().prev().prev().children().text();
         $.ajax({
             type:'GET',
             contentType:'application/json',
             url:'http://localhost:8080/fileDownload?fileID='+fileID,
             dataType:'JSON',
             success:function (data) {
-
-
+                let blob = new Blob([data]);
+                let a = document.createElement('a');
+                a.download = fileName;
+                a.href=window.URL.createObjectURL(blob);
+                a.click();
             },
             error:function () {
 
