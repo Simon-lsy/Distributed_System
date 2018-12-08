@@ -24,11 +24,11 @@ $(document).ready(function () {
         type: 'pie',
         name: 'percentage',
         data: [
-            ['电信', 45.0],
-            ['移动', 26.8],
+            ['电信', 0.39],
+            ['移动', 0.533],
             {
                 name: '联通',
-                y: 12.8,
+                y: 0.077,
                 sliced: true,
                 selected: true
             }
@@ -70,11 +70,11 @@ $(document).ready(function () {
         type: 'pie',
         name: 'percentage',
         data: [
-            ['电信', 45.0],
-            ['移动', 26.8],
+            ['电信', 0.273],
+            ['移动', 0.605],
             {
                 name: '联通',
-                y: 12.8,
+                y: 0.121,
                 sliced: true,
                 selected: true
             }
@@ -116,11 +116,11 @@ $(document).ready(function () {
         type: 'pie',
         name: 'percentage',
         data: [
-            ['电信', 45.0],
-            ['移动', 26.8],
+            ['电信', 0.17],
+            ['移动', 0.692],
             {
                 name: '联通',
-                y: 12.8,
+                y: 0.138,
                 sliced: true,
                 selected: true
             }
