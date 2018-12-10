@@ -2,55 +2,140 @@
 $(document).ready(function (){
     $("#input").fileinput({showCaption: false}); //输入框部件只显示选择文件按钮，隐藏标题
 
+    // Init modal
+    $('#myModal').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget); // 触发事件的按钮  
+        let fileName = button.data('whatever'); // 解析出whatever内容  
+        let modal = $(this);  //获得模态框本身
+        modal.find('.modal-title').text("Edit "+fileName);  // 更改将title的text
+    });
+
+    // Save File
+    $('#saveFile').on('click',function () {
+        let fileName = $('#myModalLabel').text();
+        let fileContent = $('#file_content').text();
+        let mydata = '{"fileName":"' + fileName + '","fileContent":"' + fileContent + '"}';
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: 'http://localhost:8080/saveFile',
+            data: mydata,
+            dataType: 'JSON',
+            success: function (data) {
+                getFileList();
+            },
+            error: function () {
+
+            }
+        })
+    });
+
+    // Delete File
+    $('#deleteFile').on('click',function () {
+        let fileName = $('#myModalLabel').text();
+        let mydata = '{"fileName":"' + fileName + '"}';
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: 'http://localhost:8080/deleteFile',
+            data: mydata,
+            dataType: 'JSON',
+            success: function (data) {
+                getFileList();
+            },
+            error: function () {
+
+            }
+        })
+    });
+
+    // Get File Content
+    $('.fa-pencil').on('click',function () {
+        let fileName = $(this).parent().parent().attr('id');
+        $.ajax({
+            type: 'Get',
+            contentType: 'application/json',
+            url: 'http://localhost:8080/fileContent?fileName='+fileName,
+            dataType: 'JSON',
+            success: function (data) {
+                $('#file_content').text(data);
+            },
+            error: function () {
+
+            }
+        })
+
+    });
+
     // Init water bubble
     function setWaterBubbleData(data){
         $('#waterbubble1').waterbubble({
-            radius: 100,
+            radius: 60,
             lineWidth: 5,
             data: data[0],
-            waterColor: 'rgba(25, 139, 201, 1)',
-            textColor: 'rgba(06, 85, 128, 0.8)',
+            waterColor: '#00B2EE',
+            textColor: '#FF3030',
             txt: 'N1:'+ (data[0]*100).toString()+"%",
-            font: 'bold 30px "Microsoft YaHei"',
+            font: 'bold 25px "Microsoft YaHei"',
             wave: true,
             animation: true
         });
 
         $('#waterbubble2').waterbubble({
-            radius: 100,
+            radius: 60,
             lineWidth: 5,
             data: data[1],
-            waterColor: 'rgba(25, 139, 201, 1)',
-            textColor: 'rgba(06, 85, 128, 0.8)',
+            waterColor: '#00B2EE',
+            textColor: '#FF3030',
             txt: 'N2:'+ (data[1]*100).toString()+"%",
-            font: 'bold 30px "Microsoft YaHei"',
+            font: 'bold 25px "Microsoft YaHei"',
             wave: true,
             animation: true
         });
 
         $('#waterbubble3').waterbubble({
-            radius: 100,
+            radius: 60,
             lineWidth: 5,
             data: data[2],
-            waterColor: 'rgba(25, 139, 201, 1)',
-            textColor: 'rgba(06, 85, 128, 0.8)',
+            waterColor: '#00B2EE',
+            textColor: '#FF3030',
             txt: 'N3:'+ (data[2]*100).toString()+"%",
-            font: 'bold 30px "Microsoft YaHei"',
+            font: 'bold 25px "Microsoft YaHei"',
             wave: true,
             animation: true
         });
 
         $('#waterbubble4').waterbubble({
-            radius: 100,
+            radius: 60,
             lineWidth: 5,
             data: data[3],
-            waterColor: 'rgba(25, 139, 201, 1)',
-            textColor: 'rgba(06, 85, 128, 0.8)',
+            // waterColor: 'rgba(25, 139, 201, 1)',
+            waterColor:'#00B2EE',
+            textColor: '#FF3030',
             txt: 'N4:'+ (data[3]*100).toString()+"%",
-            font: 'bold 30px "Microsoft YaHei"',
+            font: 'bold 25px "Microsoft YaHei"',
             wave: true,
             animation: true
         });
+    }
+
+
+    function setNodeStatus(data){
+        for(let i=0;i<4;i++){
+            let id = 'nodeStatus'+i.toString();
+            $('#'+id).empty();
+            if(data[i] === 0){
+                $('#'+id).append(
+                    '<button class="button button-raised button-action button-circle button-small button-glow">' +
+                    '<i class="fa fa-gears"></i></button>');
+            }
+            else{
+                $('#'+id).append(
+                    '<button class="button button-raised button-caution button-circle button-small button-glow">' +
+                    '<i class="fa fa-ban"></i></button>');
+            }
+        }
+
     }
 
 
@@ -62,6 +147,7 @@ $(document).ready(function (){
             dataType: 'JSON',
             success: function (data) {
                 setWaterBubbleData(data);
+                setNodeStatus(data);
             },
             error: function () {
 
@@ -73,7 +159,6 @@ $(document).ready(function (){
 
     getNodeInfo();
 
-
     function getFileList(){
         $.ajax({
             type:'GET',
@@ -83,12 +168,16 @@ $(document).ready(function (){
             success:function (data) {
                 $('#fileList').empty();
                 for(let i=0;i<data.length;i++){
-                    $('#fileList').append('<tr id="'+data[i].fileID+'"><td style="width: 40%;cursor: pointer">' +
+                    $('#fileList').append('<tr id="'+data[i].fileName+'">' +
+                        '<td style="width: 30%;cursor: pointer">' +
                         '<a class="fileDetails">'+data[i].fileName+'</a></td>' +
-                        '<td style="width: 25%">'+data[i].fileSize+'</td>' +
-                        '<td style="width: 20%">'+data[i].fileBlock+'</td>' +
+                        '<td style="width: 20%">'+data[i].fileSize+'</td>' +
+                        '<td style="width: 15%">'+data[i].fileBlock+'</td>' +
+                        '<td style="width: 20%;cursor: pointer">' +
+                        '<span class="fa fa-cloud-download">下载</span></td></tr>'+
                         '<td style="width: 15%;cursor: pointer">' +
-                        '<span class="fa fa-cloud-download">下载</span></td></tr>')
+                        '<span class="fa fa-pencil" data-toggle="modal" data-target="#myModal" ' +
+                        'data-whatever="'+data[i].fileName+'"> 编辑</span></td>')
                 }
             },
             error:function () {
@@ -100,13 +189,11 @@ $(document).ready(function (){
     // Init File List
     getFileList();
 
-
-
     // upload file
     $('.fileinput-upload').on('click',function () {
         let fileName = $('.file-caption-name').attr('title');
         console.log(fileName);
-        var mydata='{"fileName":"' + fileName + '"}';
+        let mydata='{"fileName":"' + fileName + '"}';
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
@@ -142,14 +229,13 @@ $(document).ready(function (){
 
     // Get File Detail Information
     $('.fileDetails').on('click',function () {
-        let fileID = $(this).parent().parent().attr('id');
-        // console.log(fileID);
+        let fileName = $(this).parent().parent().attr('id');
 
         var chart = {
             type: 'bar'
         };
         var title = {
-            text: 'File Size On Different Node'
+            text: 'Size On Different Node'
         };
         var xAxis = {
             categories: ['Node1', 'Node2', 'Node3','Node4'],
@@ -180,7 +266,7 @@ $(document).ready(function (){
         };
 
         var series = [{
-            name: 'Size of File',
+            name: 'Size',
             data: [13, 11, 51, 15]
         }];
 
@@ -198,14 +284,14 @@ $(document).ready(function (){
         $.ajax({
             type:'GET',
             contentType:'application/json',
-            url:'http://localhost:8080/fileDetail?fileID='+fileID,
+            url:'http://localhost:8080/fileDetail?fileName='+fileName,
             dataType:'JSON',
             success:function (data) {
                 var chart = {
                     type: 'bar'
                 };
                 var title = {
-                    text: 'File Size On Different Node'
+                    text: 'Size On Different Node'
                 };
                 var xAxis = {
                     categories: ['Node1', 'Node2', 'Node3','Node4'],
@@ -236,7 +322,7 @@ $(document).ready(function (){
                 };
 
                 var series = [{
-                    name: 'Size of File',
+                    name: 'Size',
                     data: [13, 11, 51, 15]
                 }];
 
@@ -250,26 +336,22 @@ $(document).ready(function (){
                 json.plotOptions = plotOptions;
                 json.credits = credits;
                 $('#node_bar').highcharts(json);
-
-
             },
             error:function () {
 
             }
-
         });
     });
 
 
     // Download File
     $('.fa-cloud-download').on('click',function () {
-        let fileID = $(this).parent().parent().attr('id');
-        console.log(fileID);
-        let fileName = $(this).parent().prev().prev().children().text();
+        let fileName = $(this).parent().parent().attr('id');
+        console.log(fileName);
         $.ajax({
             type:'GET',
             contentType:'application/json',
-            url:'http://localhost:8080/fileDownload?fileID='+fileID,
+            url:'http://localhost:8080/fileDownload?fileName='+fileName,
             dataType:'JSON',
             success:function (data) {
                 let blob = new Blob([data]);
@@ -281,9 +363,7 @@ $(document).ready(function (){
             error:function () {
 
             }
-
         })
-
     });
 });
 

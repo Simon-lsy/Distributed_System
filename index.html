@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.5.1/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/button.css">
     <link type="text/css" rel="stylesheet" href="css/mycss.css">
 </head>
 <body>
@@ -40,7 +41,7 @@
 
     <div class="panel panel-primary" style="margin-top:20px; padding:20px;">
         <div class="row clearfix ">
-            <div class="col-md-7 column " style="border-right: 1px solid #eee;">
+            <div class="col-md-6 column " style="border-right: 1px solid #eee;">
                 <h4>File Upload</h4>
                 <div class="line"></div>
 
@@ -53,18 +54,50 @@
                 <h4>Usage</h4>
                 <div class="line"></div>
                 <div align="center">
-                    <canvas id="waterbubble1"></canvas>
-                    <canvas id="waterbubble2" style="padding-left: 5vw"></canvas>
-                    <br>
+                    <div class="row clearfix" style="padding-left: 8px">
+                        <div class="col-md-3 column" id="nodeStatus0">
+                            <button class="button button-raised button-action button-circle button-small button-glow">
+                                <i class="fa fa-gears"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-3 column" id="nodeStatus1">
+                            <button class="button button-raised button-action button-circle button-small button-glow">
+                                <i class="fa fa-gears"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-3 column" id="nodeStatus2">
+                            <button class="button button-raised button-action button-circle button-small button-glow">
+                                <i class="fa fa-gears"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-3 column" style="padding-left: 20px" id="nodeStatus3">
+                            <button class="button button-raised button-caution button-circle button-small button-glow">
+                                <i class="fa fa-ban"></i>
+                            </button>
+                        </div>
+                    </div>
 
-                    <canvas id="waterbubble3"></canvas>
-                    <canvas id="waterbubble4" style="padding-left: 5vw"></canvas>
+                    <!--waterbubble-->
+                    <div class="row clearfix" style="padding-top: 1vh">
+                        <div class="col-md-3 column">
+                            <canvas id="waterbubble1"></canvas>
+                        </div>
+                        <div class="col-md-3 column">
+                            <canvas id="waterbubble2"></canvas>
+                        </div>
+                        <div class="col-md-3 column">
+                            <canvas id="waterbubble3"></canvas>
+                        </div>
+                        <div class="col-md-3 column">
+                            <canvas id="waterbubble4"></canvas>
+                        </div>
+                    </div>
                 </div>
 
 
             </div>
 
-            <div class="col-md-5 column ">
+            <div class="col-md-6 column">
 
                 <div class="panel">
                     <h4>File List</h4>
@@ -73,30 +106,65 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th style="width: 40%;">FileName</th>
-                                <th style="width: 25%;">Size</th>
-                                <th style="width: 20%;">Block</th>
-                                <th style="width: 15%;">Download</th>
+                                <th style="width: 30%;">FileName</th>
+                                <th style="width: 20%;">Size</th>
+                                <th style="width: 15%;">Block</th>
+                                <th style="width: 20%;">Download</th>
+                                <th style="width: 15%;">Edit</th>
                             </tr>
                             </thead>
                             <tbody id="fileList">
                             <tr id="tanmay.txt">
-                                <td style="width: 40%;cursor: pointer">
+                                <td style="width: 30%;cursor: pointer">
                                     <a class="fileDetails">Tanmay.txt</a></td>
-                                <td style="width: 25%">10byte</td>
-                                <th style="width: 20%;">2</th>
-                                <td style="width: 15%;cursor: pointer"><span class="fa fa-cloud-download">下载</span></td>
+                                <td style="width: 20%">10byte</td>
+                                <td style="width: 15%;">2</td>
+                                <td style="width: 20%;cursor: pointer"><span class="fa fa-cloud-download">下载</span></td>
+                                <td style="width: 15%;cursor: pointer">
+                                    <span class="fa fa-pencil" data-toggle="modal" data-target="#myModal" data-whatever="Tanmay.txt"> 编辑</span></td>
                             </tr>
-                            <tr>
-                                <td style="width: 40%;cursor: pointer">
-                                    <a class="fileDetails" id="hhh.txt">hhh.txt</a></td>
-                                <td style="width: 25%">10byte</td>
-                                <th style="width: 20%;">2</th>
-                                <td style="width: 15%;cursor: pointer"><span class="fa fa-cloud-download">下载</span></td>
+                            <tr id="hhh.txt">
+                                <td style="width: 30%;cursor: pointer">
+                                    <a class="fileDetails">hhh.txt</a></td>
+                                <td style="width: 20%">10byte</td>
+                                <td style="width: 15%;">2</td>
+                                <td style="width: 20%;cursor: pointer"><span class="fa fa-cloud-download">下载</span></td>
+                                <td style="width: 15%;cursor: pointer">
+                                    <span class="fa fa-pencil" data-toggle="modal" data-target="#myModal" data-whatever="hhh.txt"> 编辑</span></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <!-- 模态框（Modal） -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="z-index: 2000">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    模态框（Modal）标题
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <textarea class="form-control" id="file_content" rows="20" style="min-width: 90%">aaaaa
+                                </textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                </button>
+                                <button type="button" id="deleteFile" class="btn btn-danger" data-dismiss="modal">
+                                    删除
+                                </button>
+                                <button type="button" id="saveFile" class="btn btn-primary" data-dismiss="modal">
+                                    保存
+                                </button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
                 </div>
 
                 <div class="line"></div>
@@ -106,6 +174,8 @@
 
         </div>
     </div>
+
+
 
 </div>
 
