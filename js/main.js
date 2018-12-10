@@ -10,6 +10,39 @@ $(document).ready(function (){
         modal.find('.modal-title').text("Edit "+fileName);  // 更改将title的text
     });
 
+    // Change Node Status
+    $('.button-circle').on('click',function () {
+        let status = $(this).hasClass('button-action');
+        let nodeStatus = $(this).parent().attr('id');
+        let node = nodeStatus.charAt(nodeStatus.length - 1);
+        if(status){
+            $(this).removeClass('button-action');
+            $(this).addClass('button-caution');
+            $(this).empty();
+            $(this).append('<i class="fa fa-ban"></i>');
+        }
+        else {
+            $(this).removeClass('button-caution');
+            $(this).addClass('button-action');
+            $(this).empty();
+            $(this).append('<i class="fa fa-gears"></i>');
+        }
+        let mydata = '{"node":"' + node + '","status":"' + !status + '"}';
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: 'http://localhost:8080/nodeStatus',
+            data: mydata,
+            dataType: 'JSON',
+            success: function (data) {
+            },
+            error: function () {
+            }
+        })
+
+
+    });
+
     // Save File
     $('#saveFile').on('click',function () {
         let fileName = $('#myModalLabel').text();
@@ -235,7 +268,7 @@ $(document).ready(function (){
             type: 'bar'
         };
         var title = {
-            text: 'Size On Different Node'
+            text: 'Size On Different Node of '+ fileName
         };
         var xAxis = {
             categories: ['Node1', 'Node2', 'Node3','Node4'],
@@ -291,7 +324,7 @@ $(document).ready(function (){
                     type: 'bar'
                 };
                 var title = {
-                    text: 'Size On Different Node'
+                    text: 'Size On Different Node of '+fileName
                 };
                 var xAxis = {
                     categories: ['Node1', 'Node2', 'Node3','Node4'],
