@@ -7,7 +7,7 @@ $(document).ready(function (){
         let button = $(event.relatedTarget); // 触发事件的按钮  
         let fileName = button.data('whatever'); // 解析出whatever内容  
         let modal = $(this);  //获得模态框本身
-        modal.find('.modal-title').text("Edit "+fileName);  // 更改将title的text
+        modal.find('.modal-title').text(fileName);  // 更改将title的text
     });
 
     // Change Node Status
@@ -17,12 +17,12 @@ $(document).ready(function (){
         let node = nodeStatus.charAt(nodeStatus.length - 1);
         if(status){
             $(this).removeClass('button-action');
-            $(this).addClass('button-caution');
+            $(this).addClass('button-pill button-inverse');
             $(this).empty();
             $(this).append('<i class="fa fa-ban"></i>');
         }
         else {
-            $(this).removeClass('button-caution');
+            $(this).removeClass('button-pill button-inverse');
             $(this).addClass('button-action');
             $(this).empty();
             $(this).append('<i class="fa fa-gears"></i>');
@@ -106,7 +106,7 @@ $(document).ready(function (){
             radius: 60,
             lineWidth: 5,
             data: data[0],
-            waterColor: '#00B2EE',
+            waterColor: 'rgb(124, 181, 236)',
             textColor: '#FF3030',
             txt: 'N1:'+ (data[0]*100).toString()+"%",
             font: 'bold 25px "Microsoft YaHei"',
@@ -118,7 +118,7 @@ $(document).ready(function (){
             radius: 60,
             lineWidth: 5,
             data: data[1],
-            waterColor: '#00B2EE',
+            waterColor: 'rgb(124, 181, 236)',
             textColor: '#FF3030',
             txt: 'N2:'+ (data[1]*100).toString()+"%",
             font: 'bold 25px "Microsoft YaHei"',
@@ -130,7 +130,7 @@ $(document).ready(function (){
             radius: 60,
             lineWidth: 5,
             data: data[2],
-            waterColor: '#00B2EE',
+            waterColor: 'rgb(124, 181, 236)',
             textColor: '#FF3030',
             txt: 'N3:'+ (data[2]*100).toString()+"%",
             font: 'bold 25px "Microsoft YaHei"',
@@ -143,7 +143,7 @@ $(document).ready(function (){
             lineWidth: 5,
             data: data[3],
             // waterColor: 'rgba(25, 139, 201, 1)',
-            waterColor:'#00B2EE',
+            waterColor:'rgb(124, 181, 236)',
             textColor: '#FF3030',
             txt: 'N4:'+ (data[3]*100).toString()+"%",
             font: 'bold 25px "Microsoft YaHei"',
@@ -164,7 +164,7 @@ $(document).ready(function (){
             }
             else{
                 $('#'+id).append(
-                    '<button class="button button-raised button-caution button-circle button-small button-glow">' +
+                    '<button class="button button-raised button-pill button-inverse button-circle button-small button-glow">' +
                     '<i class="fa fa-ban"></i></button>');
             }
         }
@@ -227,15 +227,21 @@ $(document).ready(function (){
         let fileName = $('.file-caption-name').attr('title');
         console.log(fileName);
         let mydata='{"fileName":"' + fileName + '"}';
+        $(this).text("正在上传中....");
+        $(this).append('<span class="fa fa-refresh fa-spin"></span>');
+        alert('上传成功');
+        $('.fileinput-remove').click();
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
             data:mydata,
-            url: 'http://localhost:8080/fileUpload',
+            url: 'http://localhost:8080/upload',
             dataType: 'JSON',
             success: function (data) {
-                getFileList();
-                getNodeInfo();
+                $('.fileinput-remove').click();
+                console.log(data);
+                // getFileList();
+                // getNodeInfo();
             },
             error: function () {
 
@@ -246,14 +252,14 @@ $(document).ready(function (){
 
     // Upload File
     // $("#input-b1").fileinput({
-    //     uploadUrl: "http://localhost/file-upload-single/1", // 服务器端上传处理程序
-    //     uploadAsync: true,  //异步上传
-    //     maxFileCount: 5     //最大上传文件数为5
+    //     theme:"fa",
+    //     uploadUrl: "http://localhost:8080/file-upload-single", // 服务器端上传处理程序
+    //     // uploadAsync: true,  //异步上传
+    //     // maxFileCount: 5     //最大上传文件数为5
     // }).on("fileuploaded",function (e, data) {
     //     let res = data.response;
     //     if (res.state > 0) {
     //         alert('上传成功');
-    //         alert(res.path);
     //     }
     //     else {
     //         alert('上传失败')
