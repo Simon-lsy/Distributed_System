@@ -43,16 +43,20 @@ $(document).ready(function (){
 
     });
 
-    // Save File
+    // Update and Save File
     $('#saveFile').on('click',function () {
         let fileName = $('#myModalLabel').text();
         let fileContent = $('#file_content').text();
-        let mydata = '{"fileName":"' + fileName + '","fileContent":"' + fileContent + '"}';
+        let blob = new Blob([fileContent]);
+        let fileObj = new File([blob],fileName);
+        let form = new FormData(); // FormData 对象
+        form.append("file", fileObj); // 文件对象
+        // let mydata = '{"fileName":"' + fileName + '","fileContent":"' + fileContent + '"}';
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
             url: 'http://localhost:8080/saveFile',
-            data: mydata,
+            data: form,
             dataType: 'JSON',
             success: function (data) {
                 getFileList();
@@ -238,6 +242,7 @@ $(document).ready(function (){
             url: 'http://localhost:8080/upload',
             dataType: 'JSON',
             success: function (data) {
+                alert('上传成功');
                 $('.fileinput-remove').click();
                 console.log(data);
                 // getFileList();
