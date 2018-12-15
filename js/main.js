@@ -51,7 +51,8 @@ $(document).ready(function (){
     // Update and Save File
     $('#saveFile').on('click',function () {
         let fileName = $('#myModalLabel').text();
-        let fileContent = $('#file_content').text();
+        let fileContent = $('#file_content').val();
+        console.log(fileContent);
         let blob = new Blob([fileContent]);
         let fileObj = new File([blob],fileName);
         console.log(fileObj);
