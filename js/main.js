@@ -85,6 +85,7 @@ $(document).ready(function (){
             dataType: 'JSON',
             success: function (data) {
                 updateFileList(data);
+                alert('删除成功');
             },
             error: function () {
             }
@@ -288,10 +289,13 @@ $(document).ready(function (){
             url:'http://localhost:8080/file/detail?fileName='+fileName,
             dataType:'JSON',
             success:function (data) {
+                $('#fileStatus').empty();
                 if(data.fileStatus){
-                    $('#fileStatus').text('File Status：OK');
+                    $('#fileStatus').text('File Status：');
+                    $('#fileStatus').append('<span style="color: #337ab7">OK</span>');
                 }else {
-                    $('#fileStatus').text('File Status：Failed');
+                    $('#fileStatus').text('File Status：');
+                    $('#fileStatus').append('<span style="color: #FF3030">Failed</span>');
                 }
 
                 let nodeUsage = [0, 0, 0, 0];
